@@ -6,6 +6,7 @@ from App.database import db, get_migrate
 from App.models import User
 from App.main import create_app
 from App.controllers import ( create_user, get_all_users_json, get_all_users, initialize )
+from App.controllers import (create_competition, view_competitions, view_competition_results, import_results_from_file)
 
 
 # This commands file allow you to create convenient CLI commands for testing controllers
@@ -53,17 +54,28 @@ app.cli.add_command(user_cli) # add the group to the cli
 Test Commands
 '''
 
-test = AppGroup('test', help='Testing commands') 
 
-@test.command("user", help="Run User tests")
-@click.argument("type", default="all")
-def user_tests_command(type):
-    if type == "unit":
-        sys.exit(pytest.main(["-k", "UserUnitTests"]))
-    elif type == "int":
-        sys.exit(pytest.main(["-k", "UserIntegrationTests"]))
-    else:
-        sys.exit(pytest.main(["-k", "App"]))
-    
 
-app.cli.add_command(test)
+#Assignment CLI commands
+cli = AppGroup('competitions')
+
+@cli.command('create', help="Creates competition in the database")
+def create():
+    create_competition()
+
+@cli.command('list', help="List competitions in the database")
+def list_competitions():
+    view_competitions()
+
+@cli.command('results', help="List competition results in the database")
+def results():
+    comp_id = input("Enter competition ID: ")
+    view_competition_results(comp_id)
+
+@cli.command('import', help="Import csv file to populate database")
+def import_results():
+    comp_id = input("Enter competition ID: ")
+    file_path = input("Enter path to the results file (CSV): ")
+    import_results_from_file(comp_id, file_path)
+
+app.cli.add_command(cli)
