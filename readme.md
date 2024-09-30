@@ -2,6 +2,23 @@ Ronaldo Walker
 816036438
 COMP3616 A1
 
+Description
+In this assignment, students shall interpret system requirements to model a solution and implement a command line application.
+
+Project Selection
+
+Competitions Platform
+An application for students to showcase their participation in coding competitions.
+
+
+Create Competition
+
+Import competition results from file
+
+View competitions list
+
+View competition results
+
 This is a documentation of all the CLI commands used 
 
 
